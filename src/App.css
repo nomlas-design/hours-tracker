@@ -1,0 +1,40 @@
+.app {
+  width: 100%;
+  padding: 24px;
+}
+
+.app-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.css-1nrlq1o-MuiFormControl-root {
+  width: max(15%, 150px);
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  width: max(10%, 150px);
+}
+
+.table {
+  background: rgb(241, 241, 241);
+  padding: 1em;
+  border-radius: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  background: white;
+}
+
+.date-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  height: 68px;
+}
