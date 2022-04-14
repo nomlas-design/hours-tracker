@@ -1,37 +1,64 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Clock from './Clock';
-import dayjs from 'dayjs'
+import plusImg from '../assets/img/plus.svg';
+import minusImg from '../assets/img/minus.svg'
 
 type DropdownProps = {
-  frequency: number
+  handleTotalHours: Function
 }
 
-export default function Hours({ frequency }: DropdownProps) {
+export default function Hours({ handleTotalHours }: DropdownProps) {
 
-  const [timeIn, setTimeIn] = useState<Date>(new Date());
-  const [timeOut, setTimeOut] = useState<Date>(new Date());
-  const [hours, setHours] = useState<number | undefined>();
-  const [clockIns, setClockIns] = useState<number>(1);
-  const [rows, setRows] = useState<Array<any>>([]);
-
-  function calculateHours() {
-    const hoursIn = dayjs(timeIn);
-    const hoursOut = dayjs(timeOut);
-    const hoursWorked = hoursOut.diff(hoursIn, 'h', true);
-    const rounded = Math.round(hoursWorked * 10) / 10;
-    rounded > 0 ? setHours(rounded) : setHours(0);
-  }
+  const [hours, setHours] = useState<Array<number>>([]);
+  const [hoursList, setHoursList] = useState<Array<any>>([]);
+  const [totalHours, setTotalHours] = useState<number>(0);
 
   useEffect(() => {
-    calculateHours();
-  }, [timeIn, timeOut]);
+    let totalHours;
+    if (hours.length > 0) {
+      totalHours = hours?.reduce((val, total) => {
+        return val + total;
+      });
+      setTotalHours(totalHours)
+    }
+    else {
+      setTotalHours(0)
+    }
+  }, [hours]);
 
-  const listItems = rows.map((clockIns, id) =>
-    <div className='hours-row'>
-      <Clock key={id} handleTimeChange={(value: React.SetStateAction<any>) => setTimeIn(value)} start={true} />
-    </div>);
+  useEffect(() => {
+    console.log(totalHours)
+    handleTotalHours(totalHours)
+  }, [totalHours])
+
+  function addHours(value: React.SetStateAction<any>) {
+    const newHours = [...hours];
+    newHours[hoursList.length] = value;
+    newHours.length = hoursList.length + 1;
+    setHours(newHours);
+  }
+
+  const incremenetHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setHoursList([...hoursList, <div className='timepicker'><Clock key={hoursList.length} handleHoursChange={addHours} /></div>])
+  };
+
+  const decremenetHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const newHoursList = [...hoursList];
+    newHoursList.pop();
+    setHoursList(newHoursList);
+    const newHours = [...hours];
+    newHours.pop();
+    setHours(newHours);
+  };
 
   return (
-    { listItems }
+    <div className='hours-wrapper'>
+      <div className='timepickers'>
+        <div className='hours-row'>{hoursList}</div>
+        <button className='btn btn-hours' onClick={incremenetHandler}><img alt="add" src={plusImg} /></button>
+        <button className='btn btn-hours' onClick={decremenetHandler}><img alt="subtract" src={minusImg} /></button>
+      </div>
+      <div className="total-hours">{totalHours} hrs</div>
+    </div>
   )
 }

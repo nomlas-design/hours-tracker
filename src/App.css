@@ -14,7 +14,7 @@
 }
 
 .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-  width: max(10%, 150px);
+  width: 150px;
 }
 
 .table {
@@ -33,8 +33,59 @@
 
 .date-cell {
   display: flex;
+  justify-content: flex-start;
+  padding: 1em;
+  align-items: center;
+  height: 68px;
+  width: max(15%, 150px);
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+}
+
+.hours-cell {
+  display: flex;
+}
+
+.timepickers {
+  display: flex;
+  align-items: center;
+}
+
+.timepicker {
+
+  margin-right: 8px;
+}
+
+.hours-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.hours-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.total-hours {
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  height: 68px;
+  padding: 1em;
+}
+
+
+/* Buttons */
+
+.btn {
+  padding: 12px;
+}
+
+.btn-hours {}
+
+.btn-hours img {
+  width: 18px;
 }
